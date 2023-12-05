@@ -1,38 +1,43 @@
 import { Produto as ProdutoType } from '../App'
 import Produto from '../components/Produto'
+import { useGetJogosQuery } from '../services/api'
 
 import * as S from './styles'
 
 type Props = {
-  produtos: ProdutoType[]
   favoritos: ProdutoType[]
   adicionarAoCarrinho: (produto: ProdutoType) => void
   favoritar: (produto: ProdutoType) => void
 }
 
 const ProdutosComponent = ({
-  produtos,
   favoritos,
   adicionarAoCarrinho,
   favoritar
 }: Props) => {
-  const produtoEstaNosFavoritos = (produto: ProdutoType) => {
-    const produtoId = produto.id
-    const IdsDosFavoritos = favoritos.map((f) => f.id)
+  const { data: produtos, isLoading } = useGetJogosQuery()
 
-    return IdsDosFavoritos.includes(produtoId)
+  console.log(
+    'Props no componete Produtos:',
+    favoritos,
+    adicionarAoCarrinho,
+    favoritar
+  )
+
+  if (isLoading) {
+    return <div>Carregando...</div>
   }
 
   return (
     <>
       <S.Produtos>
-        {produtos.map((produto) => (
+        {produtos?.map((produto) => (
           <Produto
-            estaNosFavoritos={produtoEstaNosFavoritos(produto)}
             key={produto.id}
             produto={produto}
             favoritar={favoritar}
             aoComprar={adicionarAoCarrinho}
+            estaNosFavoritos={favoritos.some((f) => f.id === produto.id)}
           />
         ))}
       </S.Produtos>
