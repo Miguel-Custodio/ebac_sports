@@ -11,11 +11,15 @@ const Header = () => {
   )
   const valorTotal = carrinhoItens.reduce((acc, item) => acc + item.preco, 0)
 
+  const favoritoItens = useSelector(
+    (state: RootReducer) => state.favoritar.favoritos
+  )
+
   return (
     <S.Header>
       <h1>EBAC Sports</h1>
       <div>
-        <span>{carrinhoItens.length} favoritos</span>
+        <span>{favoritoItens.length} favoritos</span>
         <img src={cesta} alt="Cesta de Compras" />
         <span>
           {carrinhoItens.length} itens, valor total: {paraReal(valorTotal)}

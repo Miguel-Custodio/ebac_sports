@@ -8,6 +8,7 @@ type Props = {
   produto: Produto
   aoComprar: (produto: Produto) => void
   favoritar: (produto: Produto) => void
+  removerFavoritos: () => void
   estaNosFavoritos: boolean
 }
 
@@ -18,8 +19,6 @@ export const paraReal = (valor: number) =>
 
 const ProdutoComponent = ({ produto, estaNosFavoritos }: Props) => {
   const dispatch = useDispatch()
-
-  console.log('Props no componente Produto:', produto, estaNosFavoritos)
 
   return (
     <S.Produto>
